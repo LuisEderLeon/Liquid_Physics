@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Liquid Physics:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Liquid_Physics_jar</output-path>
+    <root id="archive" name="Liquid Physics.jar">
+      <element id="module-output" name="Liquid Physics" />
+    </root>
+  </artifact>
+</component>
