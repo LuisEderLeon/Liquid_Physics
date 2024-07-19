@@ -14,7 +14,7 @@ public class Renderer extends JFrame {
         CustomPanel customPanel = new CustomPanel();
         add(customPanel, BorderLayout.CENTER);
 
-        Timer timer = new Timer(3, new TimerRenderer());
+        Timer timer = new Timer(1, new TimerRenderer());
         timer.start();
     }
     public void addParticle(Particle particle){
@@ -23,15 +23,13 @@ public class Renderer extends JFrame {
     private class TimerRenderer implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (Particle particle: particleList) {
-                for (Particle particle2: particleList) {
-                    if (particle != particle2) {
-                        particle.collision(particle2);
-                    }
-                }
-                particle.startGravity(getHeight()-65, getWidth()-35);
-                repaint();
-            }
+            // Parallelize the collision detection
+            particleList.parallelStream().forEach(particle -> {for (Particle particle2 : particleList) if (particle != particle2) particle.collision(particle2);
+            });
+
+            // Parallelize the gravity application
+            particleList.parallelStream().forEach(particle -> {particle.startGravity(getHeight() - 65, getWidth() - 35);});
+            SwingUtilities.invokeLater(() -> repaint());
         }
     }
     private static class CustomPanel extends JPanel {
@@ -55,7 +53,7 @@ public class Renderer extends JFrame {
             super.paintComponent(g);
             for (Particle particle: particleList) {
                 g.setColor(getCurrentColor(particle));
-                g.fillOval((int)particle.xPos,(int)particle.yPos,10,10);
+                g.fillOval((int)particle.xPos - 5,(int)particle.yPos - 5,10,10);
             }
         }
     }
