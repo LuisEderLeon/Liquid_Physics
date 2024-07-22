@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         ArrayList<Particle> particleList = new ArrayList<>();
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 500; i++) {
             particleList.add(new Particle(1000,600));
         }
 

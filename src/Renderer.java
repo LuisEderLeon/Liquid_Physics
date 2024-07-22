@@ -28,8 +28,8 @@ public class Renderer extends JFrame {
             });
 
             // Parallelize the gravity application
-            particleList.parallelStream().forEach(particle -> {particle.startGravity(getHeight() - 65, getWidth() - 35);});
-            SwingUtilities.invokeLater(() -> repaint());
+            particleList.parallelStream().forEach(particle -> particle.startGravity(getHeight() - 65, getWidth() - 35));
+            SwingUtilities.invokeLater(Renderer.this::repaint);
         }
     }
     private static class CustomPanel extends JPanel {

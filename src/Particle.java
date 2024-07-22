@@ -31,24 +31,24 @@ public class Particle {
             ySpeed *= -0.75;
         }
         // Snap speed if it's too fast or too slow
-        if (Math.abs(xSpeed) > 5 || Math.abs(xSpeed) < 0.0001) xSpeed = 0;
+        if (Math.abs(xSpeed) > 5 || Math.abs(xSpeed) < 0.01) xSpeed = 0;
         if (ySpeed < -10) ySpeed = -10;
-        if (Math.abs(ySpeed) < 0.0001) ySpeed = 0;
+        if (Math.abs(ySpeed) < 0.01) ySpeed = 0;
     }
     protected void collision(Particle particle) {
         double yDistance = particle.yPos - yPos;
         double xDistance = particle.xPos - xPos;
         double totalDistanceSq = (xDistance * xDistance) + (yDistance * yDistance);
 
-        if (totalDistanceSq < 150 * 150) {
+        if (totalDistanceSq < 40 * 40) {
             double totalDistance = Math.sqrt(totalDistanceSq);
-            double repellingForce = 10 / (10 * totalDistance + 1);
+            double repellingForce = 2 / (0.2 * totalDistance + 1);
             double angle = Math.atan2(yDistance, xDistance);
 
             xSpeed -= repellingForce * Math.cos(angle);
             ySpeed -= repellingForce * Math.sin(angle);
 
-            if (totalDistance < 15) {
+            if (totalDistance < 10) {
                 ySpeed = 5 * Math.random() - 2.5;
             }
         }
