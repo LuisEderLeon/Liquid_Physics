@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Particle> particleList = new ArrayList<>();
         for (int i = 0; i < 500; i++) {
-            particleList.add(new Particle(1000,600));
+            particleList.add(new Particle(2000,1200));
         }
 
         Renderer renderedParticle = new Renderer();

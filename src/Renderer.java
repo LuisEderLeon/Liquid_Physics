@@ -14,7 +14,7 @@ public class Renderer extends JFrame {
         CustomPanel customPanel = new CustomPanel();
         add(customPanel, BorderLayout.CENTER);
 
-        Timer timer = new Timer(1, new TimerRenderer());
+        Timer timer = new Timer(0, new TimerRenderer());
         timer.start();
     }
     public void addParticle(Particle particle){
@@ -24,11 +24,11 @@ public class Renderer extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Parallelize the collision detection
-            particleList.parallelStream().forEach(particle -> {for (Particle particle2 : particleList) if (particle != particle2) particle.collision(particle2);
+            particleList.parallelStream().forEach(particle -> {for (Particle particle2 : particleList) if (particle != particle2 && particle.getDistance(particle2) < 1600) particle.collision(particle2);
             });
 
             // Parallelize the gravity application
-            particleList.parallelStream().forEach(particle -> particle.startGravity(getHeight() - 65, getWidth() - 35));
+            particleList.parallelStream().forEach(particle -> particle.startGravity((getHeight() - 40) * 2, getWidth() * 2));
             SwingUtilities.invokeLater(Renderer.this::repaint);
         }
     }
@@ -53,7 +53,7 @@ public class Renderer extends JFrame {
             super.paintComponent(g);
             for (Particle particle: particleList) {
                 g.setColor(getCurrentColor(particle));
-                g.fillOval((int)particle.xPos - 5,(int)particle.yPos - 5,10,10);
+                g.fillOval((int)(particle.xPos / 2 - 3) + (getWidth() / 2),(int)(particle.yPos / 2 - 3),6,6);
             }
         }
     }
